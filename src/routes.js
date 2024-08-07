@@ -9,8 +9,9 @@ router.post('/register', user.register);
 router.post('/login', user.login );
 
 //Private
-router.get('/users', auth, user.list)
-router.post('/deposit', auth, bank.deposito)
+router.post('/deposit', auth, bank.deposito);
+router.post('/transfer', auth, bank.transfer);
+router.get('/saldo', auth, bank.consulta)
 
 
 

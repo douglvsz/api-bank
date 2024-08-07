@@ -27,7 +27,8 @@ class User{
         let {name, cpfVal, email, password} = this.body;
         cpfVal = cpfVal.replace(/\D/g, '');
         const newPass = await bcrypt.hash(password, 10)
-        await prisma.user.create({data:{name: name, cpf: cpfVal, email: email, password: newPass}});
+        const created = await prisma.user.create({data:{name: name, cpf: cpfVal, email: email, password: newPass}});
+        return {message: 'Usuário criado!', user: created}
     };
 
     async login(){
@@ -38,7 +39,7 @@ class User{
 
         const secret = process.env.PRIVATE_KEY;
         const token = jwt.sign({id: this.user.id, email: this.user.email}, secret, {expiresIn: "1d"})
-        console.log({message: "Usuário autenticado", token})
+        return {message: `Olá ${this.user.name}`, token}
     };
 
 
